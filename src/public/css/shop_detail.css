@@ -1,0 +1,104 @@
+main {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 80px 0 100px;
+}
+
+.shop__content {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 45%;
+    max-width: 1058px;
+    border-radius: 8px;
+}
+
+.shop__header {
+    display: flex;
+    text-align: left;
+    align-items: center;
+}
+
+.next-shop__btn {
+    height: 24px;
+    margin: 10px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.card__img img {
+    width: 100%;
+}
+
+.shop__tag {
+    display: flex;
+    font-size: 14px;
+    color: #000;
+}
+
+.shop-detail {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.reservation-form {
+    width: 40%;
+    background-color: #2b76c7;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form__ttl {
+    font-size: 20px;
+    margin-top: 0;
+    color: #fff;
+}
+
+.reservation-form input,
+.reservation-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}
+
+.reservation-summary {
+    width: 100%;
+    background-color: #3f91ea;
+    text-align: left;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #d0dfff;
+}
+
+.reservation-summary td {
+    padding-left: 15px;
+}
+
+.reserve-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: blue;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.reserve-btn:hover {
+    background-color: #e0e0e0;
+}
