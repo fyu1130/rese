@@ -1,0 +1,59 @@
+.shops-edit {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.shops-edit__title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.shops-edit__status {
+    color: green;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.shops-edit__form .form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+.form__error {
+    color: #ff0000;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+.reservations-index__actions {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}

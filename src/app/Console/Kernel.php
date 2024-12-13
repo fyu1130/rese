@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('reminders:send')->dailyAt('8:00');
     }
 
     /**
@@ -23,6 +23,10 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
+    protected $commands = [
+        \App\Console\Commands\CreateTestCustomer::class,
+    ];
+
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');

@@ -1,0 +1,22 @@
+.reserve-qr {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reserve-qr__title {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.reserve-qr__details {
+    margin-bottom: 20px;
+}
+
+.reserve-qr__code {
+    margin: 20px 0;
+}

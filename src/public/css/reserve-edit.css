@@ -1,0 +1,59 @@
+.reserve-edit-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.reserve-edit-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form__error {
+    color: #ff0000;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.reserve-edit-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.reserve-edit-form label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.reserve-edit-form input,
+.reserve-edit-form select,
+.reserve-edit-form button {
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.reserve-edit-form button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reserve-edit-form button:hover {
+    background-color: #0056b3;
+}
+
+.reserve-edit-back {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}

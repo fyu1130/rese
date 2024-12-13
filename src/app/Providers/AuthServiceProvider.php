@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Policies\RolePolicy;
+use App\Models\Shop;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Shop::class => RolePolicy::class,
+        User::class => RolePolicy::class
     ];
 
     /**
@@ -25,6 +28,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('admin', [RolePolicy::class, 'isAdmin']);
+        Gate::define('shop_manager', [RolePolicy::class, 'isShopManager']);
+        Gate::define('has-role', function ($user, $role) {
+            $policy = new RolePolicy();
+            return $policy->hasRole($user, $role);
+        });
+        // 店舗編集の認可
+        Gate::define('update-shop', [RolePolicy::class, 'update']);
     }
 }

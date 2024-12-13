@@ -1,0 +1,57 @@
+.admin-users-index {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.admin-users-index__actions {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.admin-users-index__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin-users-index__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-users-index__item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.manager-name {
+    font-weight: bold;
+}
+
+.manager-email {
+    font-style: italic;
+    color: #666;
+}
+
+.shop-name {
+    font-weight: bold;
+    color: #007bff;
+}

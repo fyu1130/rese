@@ -5,80 +5,42 @@
 @endsection
 
 @section('content')
-<div class="shop-list">
-    <div class="shop-card">
-        <div class="card__img"><img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg
-" alt="仙人" class="shop__image"></div>
-        <div class="card__content">
-            <h2 class="shop__name">仙人</h2>
-            <div class="shop__tag">
-                <p class="shop__tag--place">＃東京都</p>
-                <p class="shop__tag--genre">＃寿司</p>
+@if($shops->isEmpty())
+    <p class="no-result">検索結果が見つかりませんでした。</p>
+@else
+    <div class="shop-list">
+        @foreach($shops as $shop)
+            <div class="shop-card">
+                <div class="card__img"><img src="{{asset('storage/' . $shop->photo_path . '.jpg')}}
+                        " alt="{{$shop->shop_name}}" class="shop__image"></div>
+                <div class="card__content">
+                    <h2 class="shop__name">{{$shop->shop_name}}</h2>
+                    <div class="shop__tag">
+                        <p class="shop__tag--place">＃{{$shop->area}}</p>
+                        <p class="shop__tag--genre">＃{{$shop->category}}</p>
+                    </div>
+                    <div class="card__btn">
+                        <a href="/detail/{{$shop->id}}" class="details-btn">詳しく見る</a>
+                        @if($shop->likes->contains('user_id', Auth::id()))
+                            <form action="{{ route('like.destroy', ['id' => $shop->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="like-btn"><div class="like"></div></button>
+                            </form>
+                        @else
+                            <form action="{{ route('like.store') }}" method="POST" class="favorite">
+                                @csrf
+                                <input type="hidden" name="shop_id" value="{{$shop->id}}">
+                                <button class="no-like-btn"><div class="no-like"></div></button>
+                            </form>
+                        @endif
+
+
+
+                    </div>
+                </div>
             </div>
-            <div class="card__btn">
-                <button class="details-btn">詳しく見る</button>
-                <button class="favorite-btn">♥</button>
-            </div>
-        </div>
+        @endforeach
     </div>
-    <div class="shop-card">
-        <div class="card__img"><img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg
-    " alt="仙人" class="shop__image"></div>
-        <div class="card__content">
-            <h2 class="shop__name">仙人</h2>
-            <div class="shop__tag">
-                <p class="shop__tag--place">＃東京都</p>
-                <p class="shop__tag--genre">＃寿司</p>
-            </div>
-            <div class="card__btn">
-                <button class="details-btn">詳しく見る</button>
-                <button class="favorite-btn">♥</button>
-            </div>
-        </div>
-    </div>
-    <div class="shop-card">
-        <div class="card__img"><img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg" alt="仙人" class="shop__image"></div>
-        <div class="card__content">
-            <h2 class="shop__name">仙人</h2>
-            <div class="shop__tag">
-                <p class="shop__tag--place">＃東京都</p>
-                <p class="shop__tag--genre">＃寿司</p>
-            </div>
-            <div class="card__btn">
-                <button class="details-btn">詳しく見る</button>
-                <button class="favorite-btn">♥</button>
-            </div>
-        </div>
-    </div>
-    <div class="shop-card">
-        <div class="card__img"><img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg
-    " alt="仙人" class="shop__image"></div>
-        <div class="card__content">
-            <h2 class="shop__name">仙人</h2>
-            <div class="shop__tag">
-                <p class="shop__tag--place">＃東京都</p>
-                <p class="shop__tag--genre">＃寿司</p>
-            </div>
-            <div class="card__btn">
-                <button class="details-btn">詳しく見る</button>
-                <button class="favorite-btn">♥</button>
-            </div>
-        </div>
-    </div>
-    <div class="shop-card">
-        <div class="card__img"><img src="https://coachtech-matter.s3-ap-northeast-1.amazonaws.com/image/sushi.jpg
-    " alt="仙人" class="shop__image"></div>
-        <div class="card__content">
-            <h2 class="shop__name">仙人</h2>
-            <div class="shop__tag">
-                <p class="shop__tag--place">＃東京都</p>
-                <p class="shop__tag--genre">＃寿司</p>
-            </div>
-            <div class="card__btn">
-                <button class="details-btn">詳しく見る</button>
-                <button class="favorite-btn">♥</button>
-            </div>
-        </div>
-    </div>
-</div>
+@endif
 @endsection

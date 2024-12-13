@@ -18,12 +18,6 @@ body {
     display: flex;
 }
 
-.nav {
-    font-size: 40px;
-    color: blue;
-    margin-right: 15px;
-}
-
 .header__inner h1 {
     font-size: 30px;
     color: #2979ff;
@@ -98,6 +92,11 @@ body {
 }
 
 /* メニューのデザイン*/
+.nav {
+    font-size: 40px;
+    margin-right: 15px;
+}
+
 .nav_content {
     background-color: #d8d9da;
     width: 100%;
@@ -119,6 +118,14 @@ body {
 
 .nav_item a {
     text-decoration: none;
+    color: blue;
+}
+
+.nav_item button {
+    font-size: 40px;
+    color: blue;
+    background-color: #d8d9da;
+    border: none;
 }
 
 /* アイコンがクリックされたらメニューを表示 */
