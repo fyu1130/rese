@@ -22,6 +22,9 @@
 QRコード生成
 QRコード確認
 
+## テーブル設計
+![image](https://github.com/user-attachments/assets/6a0c292a-e2b9-4da9-ae97-a3b12d1243cc)
+
 ## ER 図
 
 ![image](https://github.com/user-attachments/assets/19151a66-c5e8-423c-84e6-383d40d54f6d)
