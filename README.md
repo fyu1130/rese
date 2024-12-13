@@ -21,13 +21,15 @@
 リマインダー
 QRコード生成
 QRコード確認
+決済機能（stripe）
 
 ## テーブル設計
-![image](https://github.com/user-attachments/assets/6a0c292a-e2b9-4da9-ae97-a3b12d1243cc)
+![image](https://github.com/user-attachments/assets/6844dd12-e8cc-4a29-bc09-214ea9910319)
+
 
 ## ER 図
+![image](https://github.com/user-attachments/assets/7bb00518-91b5-4472-93d9-866ae5ca77a9)
 
-![image](https://github.com/user-attachments/assets/19151a66-c5e8-423c-84e6-383d40d54f6d)
 
 ## セットアップ手順
 
@@ -41,6 +43,7 @@ QRコード確認
 - **PhpMyAdmin**: データベース管理ツール。
 - **Mailhog**: メールテスト用ツール。
 - **App**: Laravel アプリケーションコンテナ。
+- **Stripe**: 決済処理を提供するライブラリ。
 
 ---
 
@@ -87,6 +90,9 @@ DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 
 MAIL_FROM_ADDRESS=test@icloud.com
+
+STRIPE_KEY=your_stripe_publishable_key
+STRIPE_SECRET=your_stripe_secret_key
 ```
 
 5. アプリケーションキーの作成
@@ -117,6 +123,8 @@ php artisan DB:seed
   ユーザー認証機能（ログイン、登録、メール認証、パスワードリセット）を提供。
 - **Simple QrCode**: 最新版  
   QRコード生成のためのライブラリ。
+- **Stripe PHP SDK**: 最新版  
+  決済処理をサポート。
 
 ---
 

@@ -14,47 +14,59 @@
         <div class="upcoming-reservations">
             <h3>これからの予約</h3>
             @forelse ($upcomingReserves as $reserve)
-                <div class="reservation-card">
-                    <div class="reservation-number">
-                        <div class="reservation-icon">🕝</div>
-                        <h4>予約{{$loop->iteration}}</h4>
-                    </div>
-                    <div class="reservation-summary">
-                        <table>
-                            <tr>
-                                <th>Shop</th>
-                                <td>{{ $reserve->shop->shop_name ?? '不明な店舗' }}</td>
-                            </tr>
-                            <tr>
-                                <th>Date</th>
-                                <td>{{$reserve->date}}</td>
-                            </tr>
-                            <tr>
-                                <th>Time</th>
-                                <td>{{$reserve->time}}</td>
-                            </tr>
-                            <tr>
-                                <th>Number</th>
-                                <td>{{$reserve->member}}人</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <form action="{{ route('reserve.cancel', ['id' => $reserve->id]) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="close-btn">×</button>
-                    </form>
-                    <div class="btn-content">
-                        <form action="{{ route('reserve.qr', ['id' => $reserve->id]) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="QR-btn">QRコード表示</button>
-                        </form>
-                        <form action="{{ route('reserve.edit', ['id' => $reserve->id]) }}" method="GET">
-                            @csrf
-                            <button type="submit" class="reserve-edit-btn">予約変更</button>
-                        </form>
-                    </div>
-                </div>
+                            <div class="reservation-card">
+                                <div class="reservation-number">
+                                    <div class="reservation-icon">🕝</div>
+                                    <h4>予約{{$loop->iteration}}</h4>
+                                </div>
+                                <div class="reservation-summary">
+                                    <table>
+                                        <tr>
+                                            <th>Shop</th>
+                                            <td>{{ $reserve->shop->shop_name ?? '不明な店舗' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date</th>
+                                            <td>{{$reserve->date}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Time</th>
+                                            <td>{{$reserve->time}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Number</th>
+                                            <td>{{$reserve->member}}人</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <form action="{{ route('reserve.cancel', ['id' => $reserve->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="close-btn">×</button>
+                                </form>
+                                <div class="btn-content">
+                                    <form action="{{ route('reserve.qr', ['id' => $reserve->id]) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="QR-btn">QRコード表示</button>
+                                    </form>
+                                    <form action="{{ route('reserve.edit', ['id' => $reserve->id]) }}" method="GET">
+                                        @csrf
+                                        <button type="submit" class="reserve-edit-btn">予約変更</button>
+                                    </form>
+                                    @if($reserve->is_paid)
+                                        <!-- 支払い済みラベル -->
+                                        <span class="paid-label">支払い済み</span>
+                                    @else
+                                        <!-- 支払い画面への遷移ボタン -->
+                                        <form action="{{ route('payments.index') }}" method="GET">
+                                            @csrf
+                                            <input type="hidden" name="shop_id" value="{{ $reserve->shop_id }}">
+                                            <input type="hidden" name="amount" value="10000"> <!-- 金額は固定値や動的に設定可能 -->
+                                            <button type="submit" class="payments-create-btn">先払い画面へ</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
             @empty
                 <p class="no-result">これからの予約はありません。</p>
             @endforelse
@@ -85,12 +97,6 @@
                     </div>
                     <a href="{{ route('reviews.create', ['shop' => $reserve->shop->id]) }}" class="review-btn">レビューを書く</a>
                 </div>
-                <!-- <form action="{{ route('payments.create') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="shop_id" value="{{ $reserve->shop_id }}">
-                    <input type="hidden" name="amount" value="10000"> 例: 支払金額を固定値で渡す
-                    <button type="submit" class="payments-create-btn">お支払い画面へ</button>
-                </form> -->
             @empty
                 <p class="no-result">レビュー可能な予約はありません。</p>
             @endforelse

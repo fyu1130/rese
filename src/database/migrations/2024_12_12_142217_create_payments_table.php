@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('shop_id');
             $table->decimal('amount', 10, 2);
-            $table->string('status')->default('pending'); // pending, completed, failed
+            $table->string('status')->default('pending');
             $table->string('stripe_payment_id')->nullable();
             $table->timestamps();
 

@@ -57,12 +57,11 @@ Route::middleware(['auth', 'role_based_verified'])->group(function () {
     Route::put('/reserve/{id}', [ReserveController::class, 'update'])->name('reserve.update');
     Route::get('/shops/{shop}/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/shops/{shop}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-
     Route::post('/reserve/{id}/qr', [ReserveController::class, 'generateQrCode'])->name('reserve.qr');
-    Route::post('/payments/create', [PaymentController::class, 'create'])->name('payments.create');
-    Route::post('/payments/{paymentId}/charge', [PaymentController::class, 'charge'])->name('payments.charge');
-    Route::get('/payments/{paymentId}/complete', [PaymentController::class, 'complete'])->name('payments.complete');
 
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::post('/payments', [PaymentController::class, 'payment'])->name('payments.payment');
+    Route::get('/payments/complete', [PaymentController::class, 'complete'])->name('payments.complete');
 });
 
 Route::middleware(['auth', 'can:admin'])->group(function () {

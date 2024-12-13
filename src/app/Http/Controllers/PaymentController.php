@@ -4,64 +4,84 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Stripe\Stripe;
+use Stripe\StripeClient;
+use Stripe\Checkout\Session as StripeSession;
 use Stripe\PaymentIntent;
 use App\Models\Payment;
+use App\Models\Shop;
 
 class PaymentController extends Controller
 {
-    public function create(Request $request)
+    public function index(Request $request)
+    {
+        $shopId = $request->input('shop_id');
+        $amount = $request->input('amount');
+        $shop = Shop::find($shopId);
+
+        if (!$shop) {
+            return redirect()->route('my_page')->withErrors(['error' => '店舗情報が見つかりませんでした。']);
+        }
+
+        return view('payments.index', compact('shop', 'amount'));
+    }
+
+    public function payment(Request $request)
     {
         $request->validate([
             'shop_id' => 'required|exists:shops,id',
-            'amount' => 'required|numeric|min:0.01',
+            'amount' => 'required|numeric|min:1',
         ]);
-
-        $payment = Payment::create([
-            'user_id' => auth()->id(),
-            'shop_id' => $request->shop_id,
-            'amount' => $request->amount,
-            'status' => 'pending',
-        ]);
-
-        return view('payments.create', compact('payment'));
-    }
-
-    public function charge(Request $request, $paymentId)
-    {
-        $payment = Payment::findOrFail($paymentId);
 
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        try {
-            $intent = PaymentIntent::create([
-                'amount' => $payment->amount * 100, // Stripeはセント単位
-                'currency' => 'jpy',
-                'metadata' => ['payment_id' => $payment->id],
-                'automatic_payment_methods' => ['enabled' => true], // 自動的な支払い方法のサポート
-            ]);
+        $checkoutSession = StripeSession::create([
+            'payment_method_types' => ['card'],
+            'line_items' => [
+                [
+                    'price_data' => [
+                        'currency' => 'jpy',
+                        'product_data' => [
+                            'name' => 'Shop Payment - ' . Shop::find($request->shop_id)->shop_name,
+                        ],
+                        'unit_amount' => $request->amount,
+                    ],
+                    'quantity' => 1,
+                ]
+            ],
+            'mode' => 'payment',
+            'success_url' => route('payments.complete', [], true) . '?session_id={CHECKOUT_SESSION_ID}&shop_id=' . $request->shop_id,
+            'cancel_url' => route('payments.index', [], true),
+        ]);
 
-            $payment->update([
-                'stripe_payment_id' => $intent->id,
-            ]);
-
-            return view('payments.confirm', [
-                'clientSecret' => $intent->client_secret,
-                'payment' => $payment,
-            ]);
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors('決済に失敗しました: ' . $e->getMessage());
-        }
+        return redirect($checkoutSession->url);
     }
-
-    public function complete(Request $request, $paymentId)
+    public function complete(Request $request)
     {
-        $payment = Payment::findOrFail($paymentId);
+        // クエリパラメータを取得
+        $sessionId = $request->query('session_id');
+        $shopId = $request->query('shop_id');
 
-        if ($payment->stripe_payment_id) {
-            $payment->update(['status' => 'completed']);
-            return redirect()->route('my_page')->with('status', '決済が完了しました！');
+        // バリデーション
+        if (!$sessionId || !$shopId) {
+            return redirect()->route('payments.index')->withErrors(['error' => '決済情報が不正です。']);
         }
 
-        return redirect()->route('my_page')->withErrors('決済が完了できませんでした。');
+        // Stripeセッション情報を取得
+        $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $session = $stripe->checkout->sessions->retrieve($sessionId);
+
+        // 決済情報を保存
+        Payment::create([
+            'user_id' => auth()->id(),
+            'shop_id' => $shopId,
+            'stripe_payment_id' => $session->payment_intent,
+            'amount' => $session->amount_total,
+            'status' => $session->payment_status,
+        ]);
+
+        return view('payments.complete', [
+            'amount' => $session->amount_total,
+            'shop' => Shop::find($shopId),
+        ]);
     }
 }

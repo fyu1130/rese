@@ -20,4 +20,11 @@ class Reserve extends Model
     public function shop(){
         return $this->belongsTo(Shop::class, 'shop_id');
     }
+    public function getIsPaidAttribute()
+    {
+        return Payment::where('user_id', $this->user_id)
+            ->where('shop_id', $this->shop_id)
+            ->where('status', 'paid') // Stripeで成功した決済
+            ->exists();
+    }
 }

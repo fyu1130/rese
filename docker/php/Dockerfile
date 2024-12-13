@@ -28,7 +28,8 @@ WORKDIR /var/www
 COPY ./src /var/www
 RUN composer install --no-dev \
     && composer require laravel/fortify \
-    && composer require simplesoftwareio/simple-qrcode
+    && composer require simplesoftwareio/simple-qrcode \
+    && composer require stripe/stripe-php # Stripeライブラリのインストールを追加
 
 # Fortifyの設定ファイルを公開
 RUN php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
