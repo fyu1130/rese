@@ -24,7 +24,7 @@ QRコード確認
 
 ## ER 図
 
-![image](https://github.com/user-attachments/assets/79430db2-cb22-4d3e-9b3e-4149d2908ae6)
+![image](https://github.com/user-attachments/assets/19151a66-c5e8-423c-84e6-383d40d54f6d)
 
 ## セットアップ手順
 
